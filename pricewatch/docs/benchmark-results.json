@@ -1,0 +1,213 @@
+{
+  "machine": {
+    "cpu": "Apple M4",
+    "logical_cpus": 10,
+    "memory_gb": 16,
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.16"
+  },
+  "date": "2026-11-04",
+  "engine": {
+    "rules": 500,
+    "partitions": 4,
+    "scenarios": [
+      {
+        "name": "evaluation only (no rule fires)",
+        "firing_fraction": 0.0,
+        "events_written": 0,
+        "cases": [
+          {
+            "mode": "saturation",
+            "target_rate": null,
+            "ticks_submitted": 60000,
+            "ticks_processed": 60000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 236,
+            "errors": 0,
+            "backpressure_waits": 236,
+            "offered_rate_per_s": 21935,
+            "sustained_rate_per_s": 20198,
+            "seconds": 2.97,
+            "latency_ms": {
+              "p50": 352.851,
+              "p95": 393.736,
+              "p99": 442.471
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 1000,
+            "ticks_submitted": 15000,
+            "ticks_processed": 15000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 1000,
+            "sustained_rate_per_s": 1000,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 0.694,
+              "p95": 2.176,
+              "p99": 2.947
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 2000,
+            "ticks_submitted": 30000,
+            "ticks_processed": 30000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 2000,
+            "sustained_rate_per_s": 2000,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 1.567,
+              "p95": 3.389,
+              "p99": 4.357
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 5000,
+            "ticks_submitted": 75000,
+            "ticks_processed": 75000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 4999,
+            "sustained_rate_per_s": 4999,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 1.99,
+              "p95": 3.924,
+              "p99": 4.458
+            }
+          }
+        ]
+      },
+      {
+        "name": "10% of rules fire (cooldown 60 s)",
+        "firing_fraction": 0.1,
+        "events_written": 25000,
+        "cases": [
+          {
+            "mode": "saturation",
+            "target_rate": null,
+            "ticks_submitted": 60000,
+            "ticks_processed": 60000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 1258,
+            "errors": 0,
+            "backpressure_waits": 1258,
+            "offered_rate_per_s": 26622,
+            "sustained_rate_per_s": 20700,
+            "seconds": 2.9,
+            "latency_ms": {
+              "p50": 307.695,
+              "p95": 1188.881,
+              "p99": 1237.364
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 1000,
+            "ticks_submitted": 15000,
+            "ticks_processed": 15000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 1000,
+            "sustained_rate_per_s": 1000,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 1.28,
+              "p95": 2.863,
+              "p99": 12.241
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 2000,
+            "ticks_submitted": 30000,
+            "ticks_processed": 30000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 2000,
+            "sustained_rate_per_s": 2000,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 1.621,
+              "p95": 4.563,
+              "p99": 11.986
+            }
+          },
+          {
+            "mode": "paced",
+            "target_rate": 5000,
+            "ticks_submitted": 75000,
+            "ticks_processed": 75000,
+            "ticks_lost": 0,
+            "queue_full_rejections": 0,
+            "errors": 0,
+            "backpressure_waits": 0,
+            "offered_rate_per_s": 4999,
+            "sustained_rate_per_s": 4999,
+            "seconds": 15.0,
+            "latency_ms": {
+              "p50": 1.812,
+              "p95": 6.531,
+              "p99": 92.059
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "api": {
+    "clients": 8,
+    "requests_per_client": 1000,
+    "endpoints": [
+      {
+        "endpoint": "GET /api/prices?spark=60",
+        "requests": 8000,
+        "errors": 0,
+        "requests_per_s": 4083,
+        "latency_ms": {
+          "p50": 1.88,
+          "p95": 2.33,
+          "p99": 2.88
+        }
+      },
+      {
+        "endpoint": "GET /api/alerts (authenticated, 20 alerts)",
+        "requests": 8000,
+        "errors": 0,
+        "requests_per_s": 880,
+        "latency_ms": {
+          "p50": 9.1,
+          "p95": 12.07,
+          "p99": 13.97
+        }
+      },
+      {
+        "endpoint": "GET /api/health",
+        "requests": 8000,
+        "errors": 0,
+        "requests_per_s": 3823,
+        "latency_ms": {
+          "p50": 2.0,
+          "p95": 2.55,
+          "p99": 2.99
+        }
+      }
+    ]
+  }
+}

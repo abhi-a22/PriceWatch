@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest==9.2.0
+pytest-cov==7.1.0
+ruff==0.17.3
+# Optional: only needed for the dashboard browser smoke test and the README
+# screenshot. Run `python -m playwright install chromium` once after installing.
+playwright==1.64.1

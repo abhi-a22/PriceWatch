@@ -1,0 +1,23 @@
+[project]
+name = "pricewatch"
+version = "1.0.0"
+description = "Real-time price alert platform"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+ignore = ["S101"]  # asserts are fine in tests
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106", "S107", "S108", "S310", "S113"]
+"scripts/*" = ["S113"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["browser: needs Playwright and a Chromium install"]

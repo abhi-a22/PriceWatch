@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>PriceWatch</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>PriceWatch</h1>
+    <span id="status" class="badge badge-muted" role="status">connecting…</span>
+    <span class="spacer"></span>
+    <span id="whoami" class="muted" hidden></span>
+    <button id="logout" class="btn btn-ghost" type="button" hidden>Sign out</button>
+  </header>
+
+  <main class="layout">
+    <section class="card" aria-labelledby="prices-h">
+      <h2 id="prices-h">Live prices</h2>
+      <div class="table-wrap">
+        <table id="prices">
+          <thead>
+            <tr>
+              <th scope="col">Symbol</th>
+              <th scope="col" class="num">Price</th>
+              <th scope="col" class="num">1m change</th>
+              <th scope="col">Last minute</th>
+            </tr>
+          </thead>
+          <tbody id="prices-body">
+            <tr><td colspan="4" class="muted">Waiting for the first prices…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="auth-card" class="card" aria-labelledby="auth-h">
+      <h2 id="auth-h">Get alerts</h2>
+      <div class="tabs" role="tablist">
+        <button id="tab-login" class="tab active" role="tab" aria-selected="true" type="button">Sign in</button>
+        <button id="tab-register" class="tab" role="tab" aria-selected="false" type="button">Create account</button>
+      </div>
+      <form id="auth-form" novalidate>
+        <label>Email
+          <input id="auth-email" type="email" autocomplete="email" required>
+        </label>
+        <label>Password
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required>
+        </label>
+        <p id="auth-error" class="error" role="alert" hidden></p>
+        <button id="auth-submit" class="btn" type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="alert-card" class="card" aria-labelledby="new-alert-h" hidden>
+      <h2 id="new-alert-h">New alert</h2>
+      <form id="alert-form" novalidate>
+        <div class="grid">
+          <label>Symbol
+            <select id="f-symbol"></select>
+          </label>
+          <label>Condition
+            <select id="f-rule">
+              <option value="above">Price at or above</option>
+              <option value="below">Price at or below</option>
+              <option value="pct_rise">Rises by at least %</option>
+              <option value="pct_drop">Falls by at least %</option>
+            </select>
+          </label>
+          <label><span id="f-threshold-label">Target price</span>
+            <input id="f-threshold" type="number" step="any" min="0" inputmode="decimal" required>
+          </label>
+          <label id="f-window-wrap" hidden>Within
+            <select id="f-window">
+              <option value="10">10 seconds</option>
+              <option value="30">30 seconds</option>
+              <option value="60" selected>1 minute</option>
+              <option value="120">2 minutes</option>
+              <option value="300">5 minutes</option>
+              <option value="600">10 minutes</option>
+            </select>
+          </label>
+          <label class="check"><input id="f-repeating" type="checkbox"> Repeating</label>
+          <label id="f-cooldown-wrap" hidden>Cooldown (seconds)
+            <input id="f-cooldown" type="number" min="0" max="86400" step="1" value="60">
+          </label>
+        </div>
+        <label>Webhook URL (optional)
+          <input id="f-webhook" type="url" placeholder="https://example.com/hook" autocomplete="off">
+        </label>
+        <p id="alert-error" class="error" role="alert" hidden></p>
+        <button class="btn" type="submit">Create alert</button>
+      </form>
+    </section>
+
+    <section id="alerts-card" class="card" aria-labelledby="alerts-h" hidden>
+      <h2 id="alerts-h">Your alerts</h2>
+      <ul id="alerts-list" class="list"></ul>
+      <p id="alerts-empty" class="muted">No alerts yet. Create one above.</p>
+    </section>
+
+    <section id="events-card" class="card wide" aria-labelledby="events-h" hidden>
+      <h2 id="events-h">Triggered alerts</h2>
+      <ul id="events-list" class="list" aria-live="polite"></ul>
+      <p id="events-empty" class="muted">Nothing has fired yet. Try a percent rule on a short window.</p>
+      <button id="events-more" class="btn btn-ghost" type="button" hidden>Load older</button>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
