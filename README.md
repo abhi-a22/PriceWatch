@@ -4,7 +4,7 @@ A real-time price alert platform. Create rules like "NVDA at or above 130" or "B
 one minute", watch live prices on a dashboard, and get notified in the dashboard and, optionally,
 through an HMAC-signed webhook.
 
-![PriceWatch dashboard](docs/dashboard.png)
+![PriceWatch dashboard](pricewatch/docs/dashboard.png)
 
 Built with Python, Flask, SQLite (WAL), and vanilla JavaScript. No frontend framework, no CDN
 assets, no message broker. Ticks flow through a partitioned in-process event bus that guarantees
@@ -13,8 +13,8 @@ per-symbol ordering.
 * [Quickstart](#quickstart) · [Architecture](#architecture) · [API](#api) ·
   [Configuration](#configuration) · [Testing](#testing) · [Benchmarks](#benchmarks) ·
   [Design decisions](#design-decisions) · [Known limitations](#known-limitations)
-* Deeper reading: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md),
-  [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md)
+* Deeper reading: [docs/ARCHITECTURE.md](pricewatch/docs/ARCHITECTURE.md),
+  [docs/WALKTHROUGH.md](pricewatch/docs/WALKTHROUGH.md)
 
 ## Quickstart
 
@@ -71,7 +71,7 @@ Run exactly one container: the feed and bus live in memory (see [limitations](#k
    cooldown. Firing is one atomic transaction made idempotent by `UNIQUE(alert_id, tick_ts_ms)`.
 5. **Webhooks**: separate queue and workers, so a dead endpoint never delays evaluation.
 
-Full details and trade-offs: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Full details and trade-offs: [docs/ARCHITECTURE.md](pricewatch/docs/ARCHITECTURE.md).
 
 ## API
 
@@ -191,7 +191,7 @@ the subprocess test, which coverage does not measure.
 ## Benchmarks
 
 Run it yourself: `python scripts/loadtest.py all --json docs/benchmark-results.json`
-(about 5 minutes). Full output is in [docs/benchmark-results.json](docs/benchmark-results.json).
+(about 5 minutes). Full output is in [docs/benchmark-results.json](pricewatch/docs/benchmark-results.json).
 
 **Machine:** Apple M4, 10 logical CPUs, 16 GB RAM, macOS 27.0.1, Python 3.12.16, run on 2026-11-04
 with nothing else running. Numbers on other hardware will differ.
@@ -252,7 +252,7 @@ connection errors from port exhaustion, and I treated those runs as invalid.
 
 * **One process, in-memory pipeline.** No broker to operate and no cross-process ordering problem.
   The cost is that it cannot scale horizontally; the upgrade path (PostgreSQL, then Kafka keyed by
-  symbol) is described in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and deliberately not built.
+  symbol) is described in [docs/ARCHITECTURE.md](pricewatch/docs/ARCHITECTURE.md) and deliberately not built.
 * **Partition by `crc32(symbol)`.** One thread owns each symbol: ordering for free, no locks on
   rule state. `crc32` instead of `hash()` because Python randomizes string hashes per process.
 * **Bounded queues that drop, never block.** The feed must not stall behind a slow consumer.
